@@ -8,7 +8,7 @@ const user = 'postgres';
 const password = process.env.DB_PASSWORD;
 const host = 'localhost';
 const port = 5432;
-const database = 'stars';
+const database = 'starfighters';
 
 export const connection = new Pool({
   user,
