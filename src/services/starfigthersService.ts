@@ -29,16 +29,25 @@ async function starsCount(repo1: any[], repo2: any[]) {
 export async function battleStars(firstUser: string, secondUser: string) {
     const firstUserRepos = await findRepoGit(firstUser);
     const secondUserRepos = await findRepoGit(secondUser);
-
+    const name1 = await starfigthersRepository.findFigterByUsername(firstUser)
+    const name2 = await starfigthersRepository.findFigterByUsername(secondUser)
+    
+    if(!name1 || !name2){
+        await starfigthersRepository.insertUser(firstUser)
+        await starfigthersRepository.insertUser(secondUser)
+    }
+    
     if (firstUserRepos && secondUserRepos) {
         const result = await starsCount(firstUserRepos, secondUserRepos)
         if (result.stars1 > result.stars2) {
+
             let obj = {
                 "winner": firstUser,
                 "loser": secondUser,
                 "draw": false
             }
             return obj
+            
         } else if (result.stars1 < result.stars2) {
             let obj = {
                 "winner": secondUser,
